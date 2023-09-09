@@ -1,47 +1,36 @@
-const express = require('express');
-const moment = require('moment-timezone');
-const app = express();
-const port = process.env.PORT || 3000;
+const express = require('express')
+const app = express()
 
 app.get('/api', (req, res) => {
-  // Get query parameters
-  const slackName = req.query.slack_name;
-  const track = req.query.track;
+  const slack_name = req.query.slack_name
+  const track = req.query.track
 
-  // Get current day of the week
-  const currentDay = moment().tz('UTC').format('dddd');
+  const now = new Date()
+  const utc_time = now.toUTCString()
 
-  // Get current UTC time with validation of +/-2 minutes
-  const currentUtcTime = moment().tz('UTC');
-  const allowedDeviationMinutes = 2;
-  const now = moment().tz('UTC');
-  const isValidTime = now.isBetween(
-    currentUtcTime.clone().subtract(allowedDeviationMinutes, 'minutes'),
-    currentUtcTime.clone().add(allowedDeviationMinutes, 'minutes')
-  );
+  const github_file_url = 'https://github.com/adewalefk/HNG-Task_1/blob/main/app.js'
+  const github_repo_url = 'https://github.com/adewalefk/HNG-Task_1'
 
-  if (!slackName || !track || !isValidTime) {
-    return res.status(400).json({ error: 'Invalid request' });
+  // if (!['backend', 'frontend', 'full-stack'].includes(track)) {
+  //   return res.status(400).json({ error: 'Invalid track parameter' });
+  // }
+
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const current_day = daysOfWeek[now.getDay()];
+
+  const response = {
+    slack_name,
+    current_day,
+    utc_time,
+    track,
+    github_file_url,
+    github_repo_url,
+    status_code: 200
   }
 
-  // GitHub URLs
-  const githubFileUrl = 'https://github.com/username/repo/blob/main/app.js';
-  const githubRepoUrl = 'https://github.com/adewaleftk/HNG-Task_1';
+  res.json(response)
+})
 
-  // Response JSON
-  const response = {
-    slack_name: slackName,
-    current_day: currentDay,
-    utc_time: currentUtcTime.format('YYYY-MM-DDTHH:mm:ssZ'),
-    track: track,
-    github_file_url: githubFileUrl,
-    github_repo_url: githubRepoUrl,
-    status_code: 200,
-  };
-
-  res.json(response);
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(3000, () => {
+  console.log('Server started on port 3000')
+})
