@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.get('/api', (req, res) => {
+  // Get query parameters
   const slackName = req.query.slack_name;
   const track = req.query.track;
 
@@ -25,7 +26,7 @@ app.get('/api', (req, res) => {
 
   // GitHub URLs
   const githubFileUrl = 'https://github.com/username/repo/blob/main/app.js';
-  const githubRepoUrl = 'https://github.com/adewaleftk/HNG-task_1';
+  const githubRepoUrl = 'https://github.com/adewaleftk/HNG-Task_1';
 
   // Response JSON
   const response = {
@@ -44,4 +45,3 @@ app.get('/api', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
