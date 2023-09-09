@@ -6,8 +6,10 @@ app.get('/api', (req, res) => {
   const track = req.query.track
 
   const now = new Date()
+  const date = new Date()
+  const utc_time = date.toISOString().split('.')[0] + "Z"
   // Format UTC time as per requirements (e.g., "2023-09-09 12:42:04")
-  const utc_time = now.toISOString().replace(/T/, ' ').replace(/\.\d+Z$/, '');
+  // const utc_time = now.toISOString().replace(/T/, ' ').replace(/\.\d+Z$/, '');
 
   const github_file_url = 'https://github.com/adewalefk/HNG-Task_1/blob/main/app.js'
   const github_repo_url = 'https://github.com/adewalefk/HNG-Task_1'
