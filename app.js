@@ -10,12 +10,8 @@ app.get('/api', (req, res) => {
   // Format UTC time as specified
   const utc_time = now.toISOString().replace(/\.\d+/, '') + 'Z';
 
-  const github_file_url = 'https://github.com/adewalefk/HNG-Task_1/blob/main/app.js';
-  const github_repo_url = 'https://github.com/adewalefk/HNG-Task_1';
-
-  if (!['backend', 'frontend', 'full-stack'].includes(track)) {
-    return res.status(400).json({ error: 'Invalid track parameter' });
-  }
+  const github_file_url = 'https://github.com/adewalefk/HNG-task_1/blob/main/app.js';
+  const github_repo_url = 'https://github.com/adewalefk/HNG-task_1';
 
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const current_day = daysOfWeek[now.getUTCDay()];
